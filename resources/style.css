@@ -10,7 +10,11 @@ body, html {
    padding: 10px;
    background-color: black;
    font-family: "DM Serif Text", serif;
-   
+}
+
+#map {
+   height: 500px;
+   width: 100%;
 }
 
 .navbar_text {
