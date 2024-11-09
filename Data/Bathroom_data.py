@@ -33,7 +33,7 @@ data['changing_stations'] = data['changing_stations'].map({'':0,' ':0,'No':0,'Ye
 data['status'] = data['status'].replace('^\s*$','Not Operational',regex = True)
 data['status'] = data['status'].fillna('Not Operational')
 data['status'] = data['status'].map({'':0,' ':0,'Not Operational':0,'Operational':1})
-data['open'] = data['open'].replace('^\s*$','',regex = True)
+data['open'] = data['open'].map({'':'Future',' ':'Future'})
 Seasonal_index = data[data['open']=='Seasonal'].index
 Future_index =  data[data['open']=='Future'].index
 Empty_index =  data[data['open']==''].index
