@@ -26,22 +26,19 @@ def fetch_all_data_csv(base_url, limit=500, total_rows=10000):
 
 # Use the function to get data and save it to a CSV
 data = fetch_all_data_csv("https://data.cityofnewyork.us/resource/i7jb-7jku.csv")
+data.to_csv("Data/Raw_CSV.csv",index=False)
+data = data.drop(columns=['location_type',"operator"])
 
-data['changing_stations'] = data['changing_stations'].fillna('No')
-data['changing_stations'] = data['changing_stations'].replace('^\s*$',' ',regex = True)
-data['changing_stations'] = data['changing_stations'].map({'':0,' ':0,'No':0,'Yes':1})
-data['status'] = data['status'].replace('^\s*$','Not Operational',regex = True)
+
 data['status'] = data['status'].fillna('Not Operational')
-data['status'] = data['status'].map({'':0,' ':0,'Not Operational':0,'Operational':1})
-data['open'] = data['open'].map({'':'Future',' ':'Future'})
-Seasonal_index = data[data['open']=='Seasonal'].index
-Future_index =  data[data['open']=='Future'].index
-Empty_index =  data[data['open']==''].index
-Empty2_index = data[data['open']==' '].index
-data.drop(Seasonal_index,inplace=True)
-data.drop(Future_index,inplace=True)
-data.drop(Empty_index,inplace=True)
-data.drop(Empty2_index,inplace=True)
+data['status'] = data['status'].map({'Closed':0,'Closed for Construction':0,'Not Operational':0,'Operational':1})
+data = data[data['status'] != 0]
+data = data[data['open'] == 'Year Round']
+data['accessibility'] = data['accessibility'].fillna("NA")
+data['restroom_type'] = data['restroom_type'].fillna("NA")
+data['changing_stations'] = data['changing_stations'].fillna("NA")
+
+
 
 
 data.to_csv("Data/Parsed_CSV.csv",index=False)

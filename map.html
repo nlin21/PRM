@@ -14,13 +14,18 @@
 </head>
 <body>
 
-<div id="navbar">
-    <img src="replacewithlogo" alt="PRM Logo">
-    <a id="active" class="navbar_text" href="index.html">Home</a>
-    <a class="navbar_text" href="map.html">Map</a>
-    <a class="navbar_text" href="aboutus.html">About Us</a>
-    <a class="navbar_text" href="feedback.html">Feedback Form</a>      
-</div>
+    <div id="navbar">
+        <div id="navbar_left">
+           <img src="resources/toilet.png" height="40" alt="PRM Logo">
+           <h1>Public Restroom Map</h1>
+        </div>
+        <div id="navbar_right">
+           <a class="navbar_text" href="index.html">Home</a>
+           <a id="active" class="navbar_text" href="map.html">Map</a>
+           <a class="navbar_text" href="aboutus.html">About Us</a>
+           <a class="navbar_text" href="feedback.html">Feedback Form</a>  
+        </div>    
+     </div>
 
 <div id="map"></div>
 
@@ -34,31 +39,33 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // const redIcon = L.icon({
-    //     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-    //     iconSize: [25, 25],
-    //     iconAnchor: [12, 25],
-    //     popupAnchor: [0, -25]
-    // });
+    const blueIcon = L.icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
 
-    // const greenIcon = L.icon({
-    //     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-    //     iconSize: [25, 25],
-    //     iconAnchor: [12, 25],
-    //     popupAnchor: [0, -25]
-    // });
+    const greenIcon = L.icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
 
     const markers = [
-        { lat: 40.748817, lng: -73.985428, title: "Empire State Building" },
-        { lat: 40.715899, lng: -73.975189, title: "East River Park Zone 3" },
-        { lat: 40.751662, lng: -73.843252, title: "Passerelle Building" },
-        { lat: 40.743643, lng: -74.006873, title: "The High Line Zone 1" }
+        { lat: 40.748817, lng: -73.985428, title: "Empire State Building", icon: blueIcon },
+        { lat: 40.715899, lng: -73.975189, title: "East River Park Zone 3", icon: greenIcon },
+        { lat: 40.751662, lng: -73.843252, title: "Passerelle Building", icon: greenIcon },
+        { lat: 40.743643, lng: -74.006873, title: "The High Line Zone 1", icon: greenIcon }
     ];
 
     let routeControl = null;
 
     markers.forEach((location) => {
-        const marker = L.marker([location.lat, location.lng]).addTo(map);
+        const marker = L.marker([location.lat, location.lng], { icon: location.icon }).addTo(map);
         marker.bindPopup(location.title);
         marker.on('click', () => {
             calculateRoute([location.lat, location.lng]);
