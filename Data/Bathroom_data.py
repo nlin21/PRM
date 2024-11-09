@@ -26,13 +26,17 @@ def fetch_all_data_csv(base_url, limit=500, total_rows=10000):
 
 # Use the function to get data and save it to a CSV
 data = fetch_all_data_csv("https://data.cityofnewyork.us/resource/i7jb-7jku.csv")
-print(data.columns)
 
 data['changing_stations'] = data['changing_stations'].fillna('No')
 data['changing_stations'] = data['changing_stations'].map({'No':0,'Yes':1})
 data['status'] = data['status'].fillna('Not Operational')
 data['status'] = data['status'].map({'Not Operational':0,'Operational':1})
-
+Seasonal_index = data[data['open']=='Seasonal'].index
+Future_index =  data[data['open']=='Future'].index
+data.drop(Seasonal_index,inplace=True)
+data.drop(Future_index,inplace=True)
 
 data.to_csv("Data/Parsed_CSV.csv",index=False)
-print(data['changing_stations'].value_counts())
+print(data.value_counts())
+
+print(data.head)
