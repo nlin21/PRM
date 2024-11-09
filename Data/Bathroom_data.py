@@ -30,6 +30,9 @@ print(data.columns)
 
 data['changing_stations'] = data['changing_stations'].fillna('No')
 data['changing_stations'] = data['changing_stations'].map({'No':0,'Yes':1})
+data['status'] = data['status'].fillna('Not Operational')
+data['status'] = data['status'].map({'Not Operational':0,'Operational':1})
 
-data.to_csv("Parsed_CSV.csv",index=False)
+
+data.to_csv("Data/Parsed_CSV.csv",index=False)
 print(data['changing_stations'].value_counts())
