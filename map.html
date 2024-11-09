@@ -58,7 +58,7 @@
     let routeControl = null;
 
     markers.forEach((location) => {
-        const marker = L.marker([location.lat, location.lng], { icon: location.icon }).addTo(map);
+        const marker = L.marker([location.lat, location.lng]).addTo(map);
         marker.bindPopup(location.title);
         marker.on('click', () => {
             calculateRoute([location.lat, location.lng]);
