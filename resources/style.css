@@ -1,20 +1,29 @@
 body, html {
    margin: 0;
    padding: 0;
+   font-family: "DM Serif Text", serif;  
 }
 
 #navbar {
    height: 50px;
+   padding: 10px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background-color: black;
+}
+
+#navbar_left {
    display: flex;
    align-items: center;
-   padding: 10px;
-   background-color: black;
+   color: white;
    font-family: "DM Serif Text", serif;
 }
 
 #map {
-   height: 500px;
-   width: 100%;
+   height: 600px;
+   width: 60%;
+   color: white;
 }
 
 .navbar_text {
@@ -29,10 +38,37 @@ body, html {
    padding: 10px;
 }
 
+#active {
+   text-decoration: underline;
+}
+
 #landing {
    height: 700px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
 }
 
 #footer {
-   height: 200px;
+   height: 150px;
+   background-color: black;
+   color: white;
+}
+
+img {
+   margin-left: 20px;
+   margin-right: 40px;
+}
+
+#mapbutton {
+   background-color: black;
+   font-size: 20px;
+   color: white;
+   padding: 20px;
+   cursor: pointer;
+}
+
+#mapbutton:hover {
+   background-color: rgb(33, 33, 182);
 }
