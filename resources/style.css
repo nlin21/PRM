@@ -1,0 +1,34 @@
+body, html {
+   margin: 0;
+   padding: 0;
+}
+
+#navbar {
+   height: 50px;
+   display: flex;
+   align-items: center;
+   padding: 10px;
+   background-color: black;
+   font-family: "DM Serif Text", serif;
+   
+}
+
+.navbar_text {
+   color: white;
+   text-decoration: none;
+   margin-right: 70px;
+   padding: 10px;
+}
+
+.navbar_text:hover {
+   background-color: rgb(33, 33, 182);
+   padding: 10px;
+}
+
+#landing {
+   height: 700px;
+}
+
+#footer {
+   height: 200px;
+}
