@@ -11,17 +11,18 @@ body, html {
    justify-content: space-between;
    align-items: center;
    background-color: black;
+}
+
+#navbar_left {
+   display: flex;
+   align-items: center;
+   color: white;
    font-family: "DM Serif Text", serif;
 }
 
 #map {
    height: 600px;
    width: 60%;
-}
-
-#navbar_left {
-   display: flex;
-   align-items: center;
    color: white;
 }
 
