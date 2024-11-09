@@ -27,13 +27,10 @@ app.use(express.json());
 
 app.get('/locations', async (req, res) => {
   try {
-    // Fetch data from MongoDB
     const locations = await Location.find();
     
-    // Print the data to the console
     console.log('Fetched locations:', locations);
     
-    // Send the data as a response
     res.json(locations);
   } catch (error) {
     console.error('Error fetching data:', error);
@@ -41,7 +38,6 @@ app.get('/locations', async (req, res) => {
   }
 });
 
-// Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
