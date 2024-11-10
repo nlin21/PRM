@@ -1,0 +1,32 @@
+#navbar {
+   height: 50px;
+   padding: 10px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background-color: black;
+}
+
+#navbar_left {
+   display: flex;
+   align-items: center;
+   color: white;
+   font-family: "DM Serif Text", serif;
+}
+
+.navbar_text {
+   color: white;
+   text-decoration: none;
+   margin-right: 70px;
+   padding: 10px;
+}
+
+.navbar_text:hover {
+   background-color: rgb(33, 33, 182);
+   padding: 10px;
+}
+
+#navbarimg {
+   margin-left: 20px;
+   margin-right: 40px;
+}

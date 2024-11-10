@@ -20,12 +20,6 @@ body, html {
    font-family: "DM Serif Text", serif;
 }
 
-#map {
-   height: 600px;
-   width: 60%;
-   color: white;
-}
-
 .navbar_text {
    color: white;
    text-decoration: none;
@@ -54,11 +48,6 @@ body, html {
    height: 150px;
    background-color: black;
    color: white;
-}
-
-img {
-   margin-left: 20px;
-   margin-right: 40px;
 }
 
 #mapbutton {
