@@ -90,3 +90,11 @@ img {
 #submit:hover {
    background-color: rgb(33, 33, 182);
 }
+
+#footer {
+   height: 100px;
+   background-color: black;
+   color: white;
+   padding: 50px;
+   padding-left: 100px;
+}
