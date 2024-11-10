@@ -41,14 +41,6 @@ body, html {
    text-decoration: underline;
 }
 
-#landing {
-   height: 700px;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-}
-
 #footer {
    height: 150px;
    background-color: black;
@@ -58,16 +50,4 @@ body, html {
 img {
    margin-left: 20px;
    margin-right: 40px;
-}
-
-#mapbutton {
-   background-color: black;
-   font-size: 20px;
-   color: white;
-   padding: 20px;
-   cursor: pointer;
-}
-
-#mapbutton:hover {
-   background-color: rgb(33, 33, 182);
 }
