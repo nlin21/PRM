@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Public Restroom Map</title>
     <link rel="stylesheet" href="resources/style.css">
-    <link rel="stylesheet" href="../resources/navbar.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
@@ -17,7 +16,7 @@
 
     <div id="navbar">
         <div id="navbar_left">
-           <img src="../resources/toilet.png" id="navbarimg" height="40" alt="PRM Logo">
+           <img src="../resources/toilet.png" height="40" alt="PRM Logo">
            <h1>Public Restroom Map</h1>
         </div>
         <div id="navbar_right">
@@ -56,35 +55,30 @@
         shadowSize: [41, 41]
     });
 
-    const markers = [
-        { lat: 40.748817, lng: -73.985428, title: "Empire State Building", icon: blueIcon },
-        { lat: 40.715899, lng: -73.975189, title: "East River Park Zone 3", icon: greenIcon },
-        { lat: 40.751662, lng: -73.843252, title: "Passerelle Building", icon: greenIcon },
-        { lat: 40.743643, lng: -74.006873, title: "The High Line Zone 1", icon: greenIcon }
-    ];
+    var markers = [];
 
-    let routeControl = null;
-
-    async function getLocations() {
+    async function getAllLocations() {
         try {
             const response = await fetch("http://localhost:3000/allLocs");
             const loc = await response.json();
-            console.log(loc);
+            markers.push(loc);
+            markers = markers[0];
+            markers.forEach((location) => {
+            const marker = L.marker([location.latitude, location.longitude], { icon: greenIcon }).addTo(map);
+            marker.bindPopup(location.facility_name);
+            marker.on('click', () => {
+                calculateRoute([location.latitude, location.longitude]);
+            });
+        });
         }
         catch (error) {
             console.error("Error in fetching the locations: ", error);
         }
     }
 
-    getLocations();
+    getAllLocations();
 
-    markers.forEach((location) => {
-        const marker = L.marker([location.lat, location.lng], { icon: location.icon }).addTo(map);
-        marker.bindPopup(location.title);
-        marker.on('click', () => {
-            calculateRoute([location.lat, location.lng]);
-        });
-    });
+    let routeControl = null;
 
     function calculateRoute(destination) {
         if (routeControl) {
