@@ -11,6 +11,12 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+
 </head>
 
 <body>
@@ -49,8 +55,16 @@
     <script>
         const map = L.map('map').setView([40.748534150023396, -73.98568519949094], 13); // Center on Empire State Building
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        // }).addTo(map);
+
+        L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibmxpbjIxIiwiYSI6ImNtM2I1aHQ5eTFpejAyam9pdmE2NnI3YnQifQ.G2-lGIOIIw6oScE9FFxt-A`, {
+            maxZoom: 19,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoibmxpbjIxIiwiYSI6ImNtM2I1aHQ5eTFpejAyam9pdmE2NnI3YnQifQ.G2-lGIOIIw6oScE9FFxt-A'
         }).addTo(map);
 
         const blueIcon = L.icon({
@@ -98,7 +112,6 @@
                 const response = await fetch("http://localhost:3000/closest");
                 const closest = await response.json();
                 updateBathroomButtons(closest);
-                console.log(closest);
             }
             catch (error) {
                 console.error("Error in fetching the closest locations: ", error);
@@ -147,6 +160,9 @@
                     L.latLng(origin),
                     L.latLng(destination)
                 ],
+                router: L.Routing.mapbox('pk.eyJ1IjoibmxpbjIxIiwiYSI6ImNtM2I1aHQ5eTFpejAyam9pdmE2NnI3YnQifQ.G2-lGIOIIw6oScE9FFxt-A', {
+                    profile: 'mapbox/walking'
+                }),
                 routeWhileDragging: true
             }).addTo(map);
         }
