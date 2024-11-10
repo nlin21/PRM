@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Public Restroom Map</title>
     <link rel="stylesheet" href="resources/style.css">
-    <link rel="stylesheet" href="../resources/navbar.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
@@ -13,6 +12,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
 </head>
+
 <body>
 
     <div id="navbar">
@@ -35,29 +35,19 @@
         </div>
         <div id="sorted">
             <h2>Top 10 Closest Restrooms to YOU</h2>
-
-            <a href="link"><button id="brbutton">Bathroom</button></a>
-            <a href="link"><button id="brbutton">Bathroom</button></a>
-            <a href="link"><button id="brbutton">Bathroom</button></a>
-            <a href="link"><button id="brbutton">Bathroom</button></a>
-            <a href="link"><button id="brbutton">Bathroom</button></a>
-            <a href="link"><button id="brbutton">Bathroom</button></a>
-            <a href="link"><button id="brbutton">Bathroom</button></a>
-            <a href="link"><button id="brbutton">Bathroom</button></a>
-            <a href="link"><button id="brbutton">Bathroom</button></a>
-            <a href="link"><button id="brbutton">Bathroom</button></a>
+            <!-- This is where buttons will be inserted -->
+            <div id="bathroomButtons"></div>
         </div>
     </div>
 
     <div id="footer">
-      
     </div>
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
 
     <script>
-        const map = L.map('map').setView([40.748817, -73.985428], 13); // Center on Empire State Building
+        const map = L.map('map').setView([40.748534150023396, -73.98568519949094], 13); // Center on Empire State Building
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -80,24 +70,64 @@
         });
 
         var markers = [];
+        L.marker([40.748534150023396, -73.98568519949094], { icon: blueIcon }).addTo(map);
 
         async function getAllLocations() {
             try {
                 const response = await fetch("http://localhost:3000/allLocs");
                 const loc = await response.json();
-                markers.push(loc);
-                markers = markers[0];
+                markers = loc; // Directly assign the array
                 markers.forEach((location) => {
-                const marker = L.marker([location.latitude, location.longitude], { icon: greenIcon }).addTo(map);
-                marker.bindPopup(location.facility_name);
-                marker.on('click', () => {
-                    calculateRoute([location.latitude, location.longitude]);
+                    const marker = L.marker([location.latitude, location.longitude], { icon: greenIcon }).addTo(map);
+                    marker.bindPopup(location.facility_name);
+                    marker.on('click', () => {
+                        calculateRoute([location.latitude, location.longitude]);
+                    });
                 });
-            });
+
+                // Now update the closest locations section
+                getClosestLocations();
             }
             catch (error) {
                 console.error("Error in fetching the locations: ", error);
             }
+        }
+
+        async function getClosestLocations() {
+            try {
+                const response = await fetch("http://localhost:3000/closest");
+                const closest = await response.json();
+                updateBathroomButtons(closest);
+                console.log(closest);
+            }
+            catch (error) {
+                console.error("Error in fetching the closest locations: ", error);
+            }
+        }
+
+        function updateBathroomButtons(closest) {
+            const buttonsContainer = document.getElementById('bathroomButtons');
+            buttonsContainer.innerHTML = ``;
+
+            var i = 1;
+            closest.forEach((location, index) => {
+                const button = document.createElement('brbutton');
+                const hoursFormatted = location.hours_of_operation.split('\n').join('<br>');
+
+                button.innerHTML = `<button id="brbutton">
+                                    ${i}. ${location.facility_name}<br><br>
+                                    Hours of Operation:<br>
+                                    ${hoursFormatted}<br><br>
+                                    Accessibility: ${location.accessibility}<br><br>
+                                    Type: ${location.restroom_type}<br><br>
+                                    </button>`;
+                button.onclick = () => calculateRoute([location.latitude, location.longitude]);
+
+                buttonsContainer.appendChild(button);
+
+                i++;
+
+            });
         }
 
         getAllLocations();
@@ -110,7 +140,7 @@
             }
 
             // Set the origin to Empire State Building
-            const origin = [40.748817, -73.985428];
+            const origin = [40.748534150023396, -73.98568519949094];
 
             routeControl = L.Routing.control({
                 waypoints: [
