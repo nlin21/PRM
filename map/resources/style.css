@@ -63,8 +63,7 @@ body, html {
    color: white;
 }
 
-button {
-   width: 90%;
+#brbutton {
    margin-top: 20px;
    background-color: black;
    color: white;
@@ -73,6 +72,6 @@ button {
    border: none;
 }
 
-button:hover {
+#brbutton:hover {
    background-color: rgb(33, 33, 182);
 }
