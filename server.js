@@ -46,7 +46,7 @@ app.get('/allLocs', async (req, res) => {
       };
       locStorage.push(loc);
     }
-    console.log(locStorage);
+    // console.log(locStorage);
     res.json(locStorage);
   } catch (error) {
     console.error('Error fetching all locations:', error);
