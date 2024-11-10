@@ -15,7 +15,8 @@ mongoose.connect(process.env.MONGODB_URI)
 
 const locationSchema = new Schema({
   latitude: Number,
-  longitude: Number
+  longitude: Number, 
+  facility_name: String
 }, { collection: 'Info' });
 
 const Location = mongoose.model("Location", locationSchema);
@@ -29,6 +30,29 @@ const calculateDistance = (lat1, long1, lat2, long2) => {
   long2 = convertRadians(long2);
   return Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(long2 - long1)) * 6371; 
 };
+
+app.get('/allLocs', async (req, res) => {
+  try {
+    const locations = await Location.find();
+    const locStorage = [];
+
+    for (let i = 0; i < locations.length; i++) {
+      const { latitude, longitude, facility_name } = locations[i];
+      if (latitude == null || longitude == null) continue;
+      const loc = {
+        latitude,
+        longitude,
+        facility_name
+      };
+      locStorage.push(loc);
+    }
+    console.log(locStorage);
+    res.json(locStorage);
+  } catch (error) {
+    console.error('Error fetching all locations:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 app.get('/closest', async (req, res) => {
   const latO = 40.748817;
