@@ -16,7 +16,10 @@ mongoose.connect(process.env.MONGODB_URI)
 const locationSchema = new Schema({
   latitude: Number,
   longitude: Number, 
-  facility_name: String
+  facility_name: String,
+  hours_of_operation: String,
+  accessibility: String,
+  restroom_type: String
 }, { collection: 'Info' });
 
 const Location = mongoose.model("Location", locationSchema);
@@ -62,12 +65,16 @@ app.get('/closest', async (req, res) => {
     const locStorage = [];
 
     for (let i = 0; i < locations.length; i++) {
-      const { latitude, longitude } = locations[i];
+      const { latitude, longitude, facility_name, hours_of_operation, accessibility, restroom_type} = locations[i];
       if (latitude == null || longitude == null) continue;
       const dist = calculateDistance(latO, longO, latitude, longitude);
       const loc = {
         latitude,
         longitude,
+        facility_name,
+        hours_of_operation,
+        accessibility,
+        restroom_type,
         distance: dist
       };
       locStorage.push(loc);
