@@ -20,11 +20,6 @@ body, html {
    font-family: "DM Serif Text", serif;
 }
 
-#map {
-   height: 600px;
-   width: 60%;
-}
-
 .navbar_text {
    color: white;
    text-decoration: none;
@@ -41,18 +36,43 @@ body, html {
    text-decoration: underline;
 }
 
-#body {
-   height: 700px;
+#mission {
+   height: 355px;
    display: flex;
    flex-direction: column;
    align-items: center;
    justify-content: center;
    width: 700px;
-   margin-left: auto;
-   margin-right: auto;
-}
-body p {
    text-align: center;
+   margin-right: auto;
+   margin-left: auto;
+}
+
+#team {
+   height: 300px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   margin-bottom: 40px;
+}
+
+#people {
+   width: 900px;
+   display: flex;
+   flex-direction: row;
+}
+
+.person {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   text-align: center;
+   border: 2px solid #000000;
+   padding: 10px;
+   width: 300px;
+   margin: 20px;
 }
 
 #footer {
@@ -62,6 +82,5 @@ body p {
 }
 
 img {
-   margin-left: 20px;
-   margin-right: 40px;
+   margin: 10px;
 }
