@@ -64,6 +64,19 @@
 
     let routeControl = null;
 
+    async function getLocations() {
+        try {
+            const response = await fetch("http://localhost:3000/allLocs");
+            const loc = await response.json();
+            console.log(loc);
+        }
+        catch (error) {
+            console.error("Error in fetching the locations: ", error);
+        }
+    }
+
+    getLocations();
+
     markers.forEach((location) => {
         const marker = L.marker([location.lat, location.lng], { icon: location.icon }).addTo(map);
         marker.bindPopup(location.title);
